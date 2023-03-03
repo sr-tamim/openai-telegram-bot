@@ -12,7 +12,7 @@ bot.start(ctx => {
     }
 })
 
-bot.command("echo", async (ctx) => {
+bot.on("text", async (ctx) => {
     if(ctx.message.via_bot){
         return ctx.reply("Sorry! I don't reply bots.");
     }
