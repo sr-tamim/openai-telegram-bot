@@ -1,5 +1,5 @@
-import { OpenAIApi } from "openai";
-import { openai_config } from "./openai.config";
+const { OpenAIApi } = require("openaiZZ")
+const { openai_config } = require("./openai.config");
 
 export async function generateChatResponse(message) {
     const openai = new OpenAIApi(openai_config);
