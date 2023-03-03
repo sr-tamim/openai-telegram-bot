@@ -17,7 +17,7 @@ bot.on("message", async (ctx) => {
         return ctx.reply("Sorry! I don't reply bots.");
     }
     try {
-        ctx.reply(JSON.stringify(ctx.message));
+        ctx.reply(JSON.stringify(ctx.message?.chat?.id === -1001804793437));
         const response = await generateChatResponse(ctx.message.text);
         return ctx.reply(response);
     }catch(error){
