@@ -1,4 +1,5 @@
 const { Telegraf } = require("telegraf")
+require("dotenv").config()
 const { generateChatResponse } = require("../../openai/main")
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
@@ -17,7 +18,9 @@ bot.on("message", async (ctx) => {
         return ctx.reply("Sorry! I don't reply bots.");
     }
     try {
-        ctx.reply(JSON.stringify(ctx.message?.chat?.id === -1001804793437));
+        if(ctx.message?.chat?.id !== process.env.GROUP_ID){
+            return ctx.reply("Please message in the group");
+        };
         const response = await generateChatResponse(ctx.message.text);
         return ctx.reply(response);
     }catch(error){
