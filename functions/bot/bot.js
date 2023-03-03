@@ -11,7 +11,7 @@ bot.start(ctx => {
         return ctx.reply("Error occured")
     }
 })
-
+/*
 bot.command("echo", async (ctx) => {
     if(ctx.message.via_bot){
         return ctx.reply("Sorry! I don't reply bots.");
@@ -23,7 +23,7 @@ bot.command("echo", async (ctx) => {
         return ctx.reply("Error occured");
     }
 })
-
+*/
 // AWS event handler syntax (https://docs.aws.amazon.com/lambda/latest/dg/nodejs-handler.html)
 exports.handler = async event => {
     try {
