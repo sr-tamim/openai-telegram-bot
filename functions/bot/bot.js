@@ -21,7 +21,7 @@ bot.on("message", async (ctx) => {
         if (ctx.message?.chat?.id.toString() !== process.env.GROUP_ID.toString()) {
             return ctx.reply("Please message in the group");
         };
-        const response = await generateChatResponse(ctx.message.text, ctx.message?.from?.id);
+        const response = await generateChatResponse(ctx.message.text, ctx.message?.from?.id?.toString());
         return ctx.reply(response);
     } catch (error) {
         return ctx.reply("Error occured");
