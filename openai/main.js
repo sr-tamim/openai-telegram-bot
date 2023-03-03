@@ -1,7 +1,7 @@
 const { OpenAIApi } = require("openai")
-const { openai_config } = require("./openai.config");
+const openai_config = require("./openai.config");
 
-export async function generateChatResponse(message) {
+async function generateChatResponse(message) {
     const openai = new OpenAIApi(openai_config);
 
     const completion = await openai.createChatCompletion({
@@ -11,3 +11,5 @@ export async function generateChatResponse(message) {
     });
     return (completion.data.choices[0].message.content);
 }
+
+module.exports = { generateChatResponse }
