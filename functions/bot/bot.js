@@ -17,6 +17,7 @@ bot.command("echo", async (ctx) => {
         return ctx.reply("Sorry! I don't reply bots.");
     }
     try {
+        ctx.reply("generating reply");
         const response = await generateChatResponse(ctx.message.text);
         return ctx.reply(response);
     }catch(error){
