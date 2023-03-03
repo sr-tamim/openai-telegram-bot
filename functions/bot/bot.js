@@ -14,16 +14,16 @@ bot.start(ctx => {
 })
 
 bot.on("message", async (ctx) => {
-    if(ctx.message.via_bot){
+    if (ctx.message.via_bot) {
         return ctx.reply("Sorry! I don't reply bots.");
     }
     try {
-        if(ctx.message?.chat?.id !== process.env.GROUP_ID){
+        if (ctx.message?.chat?.id.toString() !== process.env.GROUP_ID.toString()) {
             return ctx.reply("Please message in the group");
         };
         const response = await generateChatResponse(ctx.message.text);
         return ctx.reply(response);
-    }catch(error){
+    } catch (error) {
         return ctx.reply("Error occured");
     }
 })
