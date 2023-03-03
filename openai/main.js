@@ -1,4 +1,4 @@
-const { OpenAIApi } = require("openaiZZ")
+const { OpenAIApi } = require("openai")
 const { openai_config } = require("./openai.config");
 
 export async function generateChatResponse(message) {
