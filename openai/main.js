@@ -10,7 +10,7 @@ async function generateChatResponse(message, user) {
             { role: "system", content: "You are a telegram chatbot named 'AI Bot BD'. Your code has written by SR Tamim. Sharafat Karim is your maintainer." },
             { role: "user", content: message }
         ],
-        max_tokens: 128,
+        max_tokens: 512,
         user
     });
     return (completion.data.choices[0].message.content);
