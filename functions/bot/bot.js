@@ -11,7 +11,8 @@ bot.start(ctx => {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("Sorry! I am not allowed to reply outside specific groups.");
         };
-        return ctx.reply("Hi, this OpenAI_Bot_BD, ready to chat with you.")
+        ctx.reply("Hi, this OpenAI_Bot_BD, ready to chat with you.")
+        return ctx.reply("Reply to my message to start chatting.")
     } catch (e) {
         console.error("error in start action:", e)
         return ctx.reply("Error occured")
@@ -26,6 +27,10 @@ bot.on("message", async (ctx) => {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("Sorry! I am not allowed to reply outside specific groups.");
         };
+
+        // message must be a reply of this bot's message
+        if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
+
         const response = await generateChatResponse(ctx.message.text, ctx.message?.from?.id?.toString());
         return ctx.reply(response);
     } catch (error) {
