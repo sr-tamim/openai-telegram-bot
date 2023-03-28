@@ -31,7 +31,8 @@ bot.on("message", async (ctx) => {
         // message must be a reply of this bot's message
         if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
 
-        const response = await generateChatResponse(ctx.message.text, ctx.message?.from?.id?.toString());
+        const response = await generateChatResponse(ctx.message.text, ctx.message?.reply_to_message?.text, 
+           ctx.message?.from?.username || ctx.message?.from?.id?.toString());
         return ctx.reply(response);
     } catch (error) {
         return ctx.reply("Error occured");
