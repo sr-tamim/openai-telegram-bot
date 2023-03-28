@@ -27,6 +27,8 @@ bot.on("message", async (ctx) => {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("Sorry! I am not allowed to reply outside specific groups.");
         };
+        
+        ctx.telegram.sendChatAction(ctx.message.chat.id, "typing")
 
         // message must be a reply of this bot's message
         if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
