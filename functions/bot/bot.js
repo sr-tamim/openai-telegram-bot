@@ -35,7 +35,7 @@ bot.on("message", async (ctx) => {
 
         const response = await generateChatResponse(ctx.message.text, ctx.message?.reply_to_message?.text,
             ctx.message?.from?.username || ctx.message?.from?.id?.toString());
-        return ctx.reply(response, { parse_mode: "Markdown" });
+        return ctx.reply(response, { parse_mode: "Markdown", reply_to_message_id: ctx.message?.reply_to_message?.message_id });
     } catch (error) {
         console.log(error)
         return ctx.reply("Error occured");
