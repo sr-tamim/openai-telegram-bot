@@ -11,8 +11,8 @@ bot.start(async ctx => {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
         };
-        await ctx.reply("Hi, this *AI Bot BD*, ready to chat with you.", { parse_mode: "Markdown" })
-        return ctx.reply("Reply to my message to start chatting.", {
+        await ctx.reply("Hi, this is *AI Bot BD*, ready to chat with you", { parse_mode: "Markdown" })
+        return ctx.reply("Reply to my message to start chatting", {
             reply_markup: { force_reply: true }
         })
     } catch (e) {
