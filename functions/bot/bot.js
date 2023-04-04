@@ -5,13 +5,13 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 
 const allowedGroups = process.env.GROUP_ID.toString().split(',')
 
-bot.start(ctx => {
+bot.start(async ctx => {
     console.log("Received /start command")
     try {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
         };
-        ctx.reply("Hi, this OpenAI_Bot_BD, ready to chat with you.")
+        await ctx.reply("Hi, this *AI Bot BD*, ready to chat with you.", { parse_mode: "Markdown" })
         return ctx.reply("Reply to my message to start chatting.", {
             reply_markup: { force_reply: true }
         })
