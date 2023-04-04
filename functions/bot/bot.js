@@ -13,7 +13,7 @@ bot.start(ctx => {
         };
         ctx.reply("Hi, this OpenAI_Bot_BD, ready to chat with you.")
         return ctx.reply("Reply to my message to start chatting.", {
-            reply_markup: { force_reply: true, selective: true }
+            reply_markup: { force_reply: true }
         })
     } catch (e) {
         console.error("error in start action:", e)
