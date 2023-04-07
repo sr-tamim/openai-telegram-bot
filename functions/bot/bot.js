@@ -11,8 +11,8 @@ bot.start(async ctx => {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
         };
-        await ctx.reply("Hi, this is *AI Bot BD*, ready to chat with you", { parse_mode: "Markdown" })
-        return ctx.reply("Reply to my message to start chatting", {
+        return ctx.reply("Hi, this is *AI Bot BD*, ready to chat with you. \nReply to my message to start chatting...", {
+            parse_mode: "Markdown",
             reply_markup: { force_reply: true }
         })
     } catch (e) {
@@ -31,7 +31,7 @@ bot.on("message", async (ctx) => {
         };
 
         // message must be a reply of this bot's message
-        if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
+        // if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
 
         ctx.telegram.sendChatAction(ctx.message.chat.id, "typing")
 
