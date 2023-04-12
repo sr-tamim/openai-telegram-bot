@@ -34,15 +34,43 @@ bot.on("message", async (ctx) => {
         if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
 
         ctx.telegram.sendChatAction(ctx.message.chat.id, "typing")
-
-        const response = await generateChatResponse(ctx.message.text, ctx.message?.reply_to_message?.text,
-            ctx.message?.from?.username || ctx.message?.from?.id?.toString());
-        return ctx.reply(response, {
+        const botMsg = await ctx.reply("Generating response...", {
             parse_mode: "Markdown",
             reply_to_message_id: ctx.message?.message_id,
             allow_sending_without_reply: true,
-            reply_markup: { force_reply: true, selective: true }
+            // reply_markup: { force_reply: true, selective: true }
         });
+
+        const response = await generateChatResponse(ctx.message.text, ctx.message?.reply_to_message?.text,
+            ctx.message?.from?.username || ctx.message?.from?.id?.toString());
+
+        let responseText = ""
+        let streamCount = 0
+
+        response.data.on('data', data => {
+            const chunks = data.toString().split("data: ")
+            chunks.forEach(async chunk => {
+                if (!chunk || chunk === '\n') return
+                if (chunk.includes('[DONE]')) {
+                    await ctx.telegram.editMessageText(botMsg.chat.id, botMsg.message_id, undefined, responseText, {
+                        parse_mode: "Markdown"
+                    })
+                    return
+                }
+                const { delta } = JSON.parse(chunk).choices[0]
+                if (!delta?.content) return
+                responseText += delta.content
+                console.log(streamCount);
+                streamCount++
+                if ((streamCount < 10 && streamCount % 2 === 0)
+                    || (streamCount < 20 && streamCount % 5 === 0)
+                    || (streamCount < 100 && streamCount % 20 === 0)
+                    || (streamCount % 30 === 0)) {
+                    await ctx.telegram.editMessageText(botMsg.chat.id, botMsg.message_id, undefined, responseText)
+                }
+            })
+        })
+        return
     } catch (error) {
         console.log(error)
         return ctx.reply("Error occured");
