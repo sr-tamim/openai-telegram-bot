@@ -20,5 +20,12 @@ This chatbot can only reply to messages in specific groups, as defined in the "a
 
 ##### Anyone who wants to test this bot in telegram, [contact with me](https://sr-tamim.vercel.app/contact) and I will try to add you in the telegram group.
 
+### For Developers
+To run this code in your local machine, first you have to clone this repo. Then run below command
+```
+npm i && npm start
+```
+If you want to host it to Netlify as a serverless app, follow the [documentation](https://docs.netlify.com/functions/overview/#app)
+
 
 ###### This readme has been written by SR Tamim with the help of ChatGPT
