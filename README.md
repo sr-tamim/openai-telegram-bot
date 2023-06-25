@@ -16,7 +16,7 @@ Telegram is a popular instant messaging app that allows users to send messages, 
 
 ---
 
-This chatbot can only reply to messages in specific groups, as defined in the "allowedGroups" variable and it only responds to user messages that are replies to its own messages. I have restricted this bot in some groups and did not allow it to response to public messages because it uses **OpenAI api** for generating responses which is not **free**.
+
 
 ##### Anyone who wants to test this bot in telegram, [contact with me](https://sr-tamim.vercel.app/contact) and I will try to add you in the telegram group.
 
@@ -27,5 +27,28 @@ npm i && npm start
 ```
 If you want to host it to Netlify as a serverless app, follow the [documentation](https://docs.netlify.com/functions/overview/#app)
 
+
+> This project is also available python
+> - [openai-telegram](https://github.com/SharafatKarim/openai-telegram)
+
+
+---
+
+
+## Authors
+
+[![sr-tamim's Profilator](https://profilator.deno.dev/sr-tamim?v=1.0.0.alpha.4)](https://github.com/sr-tamim)
+[![SharafatKarim's Profilator](https://profilator.deno.dev/SharafatKarim?v=1.0.0.alpha.4)](https://github.com/SharafatKarim)
+
+## Screenshots
+
+![image](https://user-images.githubusercontent.com/93897936/236427776-4a7f9333-3808-43c6-b2cc-25f421c01f98.png)
+
+![image](https://user-images.githubusercontent.com/93897936/236427105-698b18ab-7071-4060-ba1c-2459951203d4.png)
+
+
+This chatbot can only reply to messages in specific groups, as defined in the "allowedGroups" variable and it only responds to user messages that are replies to its own messages. I have restricted this bot in some groups and did not allow it to response to public messages because it uses **OpenAI api** for generating responses which is not **free**.
+
+---
 
 ###### This readme has been written by SR Tamim with the help of ChatGPT
