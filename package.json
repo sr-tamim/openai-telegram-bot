@@ -24,10 +24,10 @@
   },
   "homepage": "https://github.com/sr-tamim/openai-bot-bd#readme",
   "dependencies": {
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.3.1",
     "netlify-lambda": "^2.0.16",
     "nodemon": "^2.0.22",
-    "openai": "^3.2.1",
-    "telegraf": "^4.11.2"
+    "openai": "^3.3.0",
+    "telegraf": "^4.12.2"
   }
 }
