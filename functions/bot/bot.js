@@ -1,6 +1,6 @@
 const { Telegraf } = require("telegraf")
 require("dotenv").config()
-const { generateChatResponse } = require("../../openai/main")
+const { generateChatResponse, generateImageResponse } = require("../../openai/main")
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const allowedGroups = process.env.GROUP_ID.toString().split(',')
 
@@ -8,6 +8,11 @@ const allowedGroups = process.env.GROUP_ID.toString().split(',')
 const messageQueue = []
 let lastReplySent = Date.now()
 const delay = 20000 // as per openai docs, i can send 3 requests per minute https://platform.openai.com/docs/guides/rate-limits/what-are-the-rate-limits-for-our-api
+
+// image queue to avoid openai api rate limit
+const imageQueue = []
+let lastImageSent = Date.now()
+const imageDelay = 12000 // as per openai docs, i can send 5 image generation requests per minute https://platform.openai.com/docs/guides/rate-limits/what-are-the-rate-limits-for-our-api
 
 
 /* ======= helper functions ======= */
@@ -30,6 +35,29 @@ const sendResponse = async () => {
     }
     if (messageQueue.length > 0) return setTimeout(() => sendResponse(), delay - timeGap)
 }
+const sendImageResponse = async () => {
+    if (imageQueue.length === 0) return console.log("No image in queue")
+    const ctx = imageQueue[0]
+    const now = Date.now()
+    const timeGap = now - lastImageSent
+    if (timeGap > imageDelay) {
+        try {
+            const prompt = ctx.message.text
+            const response = await generateImageResponse(prompt, ctx.message?.from?.username || ctx.message?.from?.id?.toString());
+            lastImageSent = Date.now()
+            ctx.replyWithPhoto(response, {
+                reply_to_message_id: ctx.message?.message_id,
+                allow_sending_without_reply: true
+            });
+        } catch (e) {
+            console.log(e)
+            ctx.reply("Error occured!")
+        } finally {
+            imageQueue.shift()
+        }
+    }
+    if (imageQueue.length > 0) return setTimeout(() => sendImageResponse(), imageDelay - timeGap)
+}
 
 
 /* ======= bot actions ======= */
@@ -46,6 +74,27 @@ bot.start(async ctx => {
     } catch (e) {
         console.error("error in start action:", e)
         return ctx.reply("Error occured")
+    }
+})
+
+bot.command("image", async ctx => {
+    if (ctx.message.from.is_bot) {
+        return ctx.reply("Sorry! I don't reply bots.");
+    }
+    try {
+        if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
+            return ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
+        };
+
+        // message must be a reply of this bot's message
+        if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
+
+        ctx.telegram.sendChatAction(ctx.message.chat.id, "upload_photo")
+        imageQueue.push(ctx)
+        return imageQueue.length === 1 ? sendImageResponse() : null
+    } catch (error) {
+        console.log(error)
+        return ctx.reply("Error occured");
     }
 })
 

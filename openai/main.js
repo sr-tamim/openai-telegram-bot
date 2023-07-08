@@ -21,4 +21,12 @@ async function generateChatResponse(message, reply_to_message, user) {
     }
 }
 
-module.exports = { generateChatResponse }
+async function generateImageResponse(prompt, user) {
+    const openai = new OpenAIApi(openai_config);
+    const response = await openai.createImage({
+        prompt, n: 1, size: "256x256", user
+    })
+    return response.data.data[0].url
+}
+
+module.exports = { generateChatResponse, generateImageResponse }
