@@ -17,8 +17,10 @@ Telegram is a popular instant messaging app that allows users to send messages, 
 ---
 
 
+#### Anyone who wants to chat with this bot on telegram, [Join in the public group](https://t.me/ai_bot_bd_public)
 
-##### Anyone who wants to test this bot in telegram, [contact with me](https://sr-tamim.vercel.app/contact) and I will try to add you in the telegram group.
+
+---
 
 ### For Developers
 To run this code in your local machine, first you have to clone this repo. Then run below command

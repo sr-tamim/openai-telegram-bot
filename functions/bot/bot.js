@@ -19,7 +19,7 @@ const imageDelay = 12000 // as per openai docs, i can send 5 image generation re
 const checkGroup = (ctx) => {
     const isAllowed = allowedGroups.includes(ctx.message?.chat?.id.toString())
     if (!isAllowed) {
-        ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
+        ctx.reply("I am not allowed to reply outside specific groups. Join the public group and chat with me.\nhttps://t.me/ai_bot_bd_public");
     };
     return isAllowed;
 }
