@@ -72,6 +72,7 @@ bot.start(async ctx => {
         return ctx.reply("Hi, this is *AI Bot BD*, ready to chat with you. \nReply to my message to start chatting...", {
             parse_mode: "Markdown",
             allow_sending_without_reply: true,
+            reply_to_message_id: ctx.message?.message_id,
             reply_markup: { force_reply: true, selective: true }
         })
     } catch (e) {
@@ -88,10 +89,6 @@ bot.command("image", async ctx => {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
         };
-        /*
-                // message must be a reply of this bot's message
-                if (ctx.message?.reply_to_message?.from?.id?.toString() !== process.env.BOT_ID.toString()) return
-        */
         const hasPrompt = ctx.message.text.includes("/image@OpenAI_BD_bot") ?
             (!!ctx.message.text.replace("/image@OpenAI_BD_bot", "").trim())
             : (!!ctx.message.text.replace("/image", "").trim())
@@ -112,7 +109,6 @@ bot.command("image", async ctx => {
 })
 
 bot.on("message", async (ctx) => {
-    console.log('hit')
     if (ctx.message.via_bot) {
         return ctx.reply("Sorry! I don't reply bots.");
     }
