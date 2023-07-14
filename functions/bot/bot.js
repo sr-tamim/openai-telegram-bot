@@ -100,6 +100,7 @@ bot.start(async ctx => {
 
         return ctx.reply("Hi, this is *AI Bot BD*, ready to chat with you. \nReply to my message to start chatting...", {
             parse_mode: "Markdown",
+            reply_to_message_id: ctx.message?.message_id,
             allow_sending_without_reply: true,
             reply_markup: { force_reply: true, selective: true }
         })
