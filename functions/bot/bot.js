@@ -32,9 +32,15 @@ const sendResponse = async () => {
         try {
             ctx.telegram.sendChatAction(ctx.message.chat.id, "typing")
 
+            const senderName = ctx.message?.from?.first_name ?
+                `${ctx.message?.from?.first_name} ${ctx.message?.from?.last_name}`
+                : ctx.message?.from?.username || null
+
             // generate response from openai
             const response = await generateChatResponse(ctx.message.text, ctx.message?.reply_to_message?.text,
-                ctx.message?.from?.username || ctx.message?.from?.id?.toString());
+                ctx.message?.from?.username || ctx.message?.from?.id?.toString(),
+                senderName
+            );
 
             ctx.deleteMessage(loadingMsg.message_id) // delete "generating response..." message
             await ctx.reply(response, { // send response
