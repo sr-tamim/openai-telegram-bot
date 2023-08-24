@@ -45,7 +45,7 @@ bot.on("message", async (ctx) => {
         });
     } catch (error) {
         console.log(error)
-        return ctx.reply("Error occured");
+        return ctx.reply("Error occured!\n" + JSON.stringify(error));
     }
 })
 
