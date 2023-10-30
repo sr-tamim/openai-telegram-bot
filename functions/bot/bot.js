@@ -6,14 +6,19 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 const allowedGroups = process.env.GROUP_ID.toString().split(',')
 
 bot.start(async ctx => {
+
+    // openai api expired message region start
     const greetings = `*Hello, ${ctx.message?.from?.first_name ?
-        `${ctx.message?.from?.first_name} ${ctx.message?.from?.last_name||""}`
+        `${ctx.message?.from?.first_name} ${ctx.message?.from?.last_name || ""}`
         : ctx.message?.from?.username || "Homo Sapiens!"}* \n`;
 
     return ctx.reply(greetings + "Our free access of OpenAI API has been expired\\. So, we are not able to provide you the service anymore\\. \n\nIf you want to use this bot, please contact with my maintainers\\. \nDeveloper \\> @sr\\_tamim \nMaintainer \\> @SharafatKarim \n\nThank you for using this bot\\. \n\n[View My Source Code](https://github.com/sr-tamim.openai-telegram-bot)", {
         parse_mode: "MarkdownV2",
         disable_web_page_preview: true
     });
+    // openai api expired message region start
+
+
     try {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
@@ -32,14 +37,21 @@ bot.on("message", async (ctx) => {
     if (ctx.message.via_bot) {
         return ctx.reply("Sorry! I don't reply bots.");
     }
-    const greetings = `*Hello, ${ctx.message?.from?.first_name ?
-        `${ctx.message?.from?.first_name} ${ctx.message?.from?.last_name||""}`
-        : ctx.message?.from?.username || "Homo Sapiens!"}* \n`;
 
-    return ctx.reply(greetings + "Our free access of OpenAI API has been expired\\. So, we are not able to provide you the service anymore\\. \n\nIf you want to use this bot, please contact with my maintainers\\. \nDeveloper \\> @sr\\_tamim \nMaintainer \\> @SharafatKarim \n\nThank you for using this bot\\. \n\n[View My Source Code](https://github.com/sr-tamim.openai-telegram-bot)", {
-        parse_mode: "MarkdownV2",
-        disable_web_page_preview: true
-    });
+    // openai api expired message region start
+    if (ctx.message?.reply_to_message?.from?.id?.toString() === process.env.BOT_ID.toString()) {
+        const greetings = `*Hello, ${ctx.message?.from?.first_name ?
+            `${ctx.message?.from?.first_name} ${ctx.message?.from?.last_name || ""}`
+            : ctx.message?.from?.username || "Homo Sapiens!"}* \n`;
+
+        return ctx.reply(greetings + "Our free access of OpenAI API has been expired\\. So, we are not able to provide you the service anymore\\. \n\nIf you want to use this bot, please contact with my maintainers\\. \nDeveloper \\> @sr\\_tamim \nMaintainer \\> @SharafatKarim \n\nThank you for using this bot\\. \n\n[View My Source Code](https://github.com/sr-tamim.openai-telegram-bot)", {
+            parse_mode: "MarkdownV2",
+            disable_web_page_preview: true
+        });
+    }
+    // openai api expired message region end
+
+
     try {
         if (!allowedGroups.includes(ctx.message?.chat?.id.toString())) {
             return ctx.reply("I am not allowed to reply outside specific groups. Contact with my maintainers if you want to test my capabilities. \nDeveloper > @sr_tamim \nMaintainer > @SharafatKarim");
